@@ -12,6 +12,22 @@
 
 #include "philo.h"
 
+static void	swap_forks(t_philo *head)
+{
+	pthread_mutex_t	*tmp;
+
+	while (head)
+	{
+		if (head->seat % 2 == 0)
+		{
+			tmp = head->right;
+			head->right = head->left;
+			head->left = tmp;
+		}
+		head = head->next;
+	}
+}
+
 static t_philo	*set_table(t_data *data)
 {
 	t_philo	*head;
@@ -31,6 +47,7 @@ static t_philo	*set_table(t_data *data)
 		tmp = tmp->next;
 		i++;
 	}
+	swap_forks(head);
 	head->left = tmp->right;
 	return (head);
 }

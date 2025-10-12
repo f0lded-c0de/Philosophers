@@ -45,11 +45,17 @@ void	philo_free(t_philo *head)
 		tmp = head->next;
 		if (head->tid_init)
 			pthread_join(head->tid, NULL);
-		if (head->right)
+		if (head->seat % 2 && head->right)
 		{
 			if (head->right_init)
 				pthread_mutex_destroy(head->right);
 			free(head->right);
+		}
+		if (head->seat % 2 == 0 && head->left)
+		{
+			if (head->right_init)
+				pthread_mutex_destroy(head->left);
+			free(head->left);
 		}
 		free(head);
 		head = tmp;

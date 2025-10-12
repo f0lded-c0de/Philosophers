@@ -37,7 +37,7 @@ int	sleep_for(t_philo *philo, long unsigned ms)
 	start = get_true_time();
 	while (start + ms > get_true_time())
 	{
-		usleep(10);
+		usleep(50);
 		if (get_true_time() > (philo->last_meal + philo->data->ded))
 			return (philo_death(philo), 0);
 	}

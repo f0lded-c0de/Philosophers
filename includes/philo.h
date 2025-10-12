@@ -82,6 +82,7 @@ void			wait_for(long unsigned ms);
 // utils/str.c
 int				ft_strlen(const char *str);
 int				ft_atoi(const char *nptr);
+int				ft_strncmp(const char *s1, const char *s2, size_t n);
 
 /* * * * * * * * * * * * * * * * * * Macros * * * * * * * * * * * * * * * * * */
 // Philo Messages

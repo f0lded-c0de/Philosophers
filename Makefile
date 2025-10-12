@@ -13,7 +13,7 @@ all: $(NAME)
 
 
 $(NAME): $(OBJ)
-	cc -v $(OBJ) -o $(NAME)
+	cc $(OBJ) -o $(NAME)
 
 $(DEBUG): $(SRC)
 	echo test
