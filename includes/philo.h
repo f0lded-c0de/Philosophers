@@ -6,7 +6,7 @@
 /*   By: bsamzun <bsamzun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:24:27 by bsamzun           #+#    #+#             */
-/*   Updated: 2025/10/12 13:04:39 by bsamzun          ###   ########.fr       */
+/*   Updated: 2025/10/12 16:13:51 by bsamzun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,20 @@ void			philo_free(t_philo *head);
 
 // core/philo_routine.c
 void			*philo_routine(void *data);
+void			philo_death(t_philo *philo);
 
 // core/parsing.c
 int				parse_args(t_data *data, char **av, int ac);
 
 // utils/utils.c
+int				disp_msg(t_philo *philo, char *message);
+void			unlock_both(pthread_mutex_t *left, pthread_mutex_t *right);
+
+// utils/time.c
 long unsigned	get_true_time(void);
 long unsigned	get_sim_time(t_data *data);
-void			disp_msg(t_philo *philo, char *message);
+int				sleep_for(t_philo *philo, long unsigned ms);
 void			wait_for(long unsigned ms);
-void			unlock_both(pthread_mutex_t *left, pthread_mutex_t *right);
 
 // utils/str.c
 int				ft_strlen(const char *str);
@@ -83,8 +87,8 @@ int				ft_atoi(const char *nptr);
 // Philo Messages
 # define FRK_MSG "has taken a fork"
 # define EAT_MSG "is eating"
-# define EEP_MSG "went to sleep"
+# define EEP_MSG "went to eep"
 # define THK_MSG "is thinking"
-# define DED_MSG "is dead"
+# define DED_MSG "is ded"
 
 #endif

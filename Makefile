@@ -1,5 +1,5 @@
 SRC =	core/main.c core/parsing.c core/philo.c core/philo_routine.c \
-		utils/errors.c utils/str.c utils/utils.c
+		utils/errors.c utils/str.c utils/utils.c utils/time.c
 
 OBJ = $(SRC:.c=.o)
 
