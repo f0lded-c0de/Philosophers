@@ -47,8 +47,8 @@ static t_philo	*set_table(t_data *data)
 		tmp = tmp->next;
 		i++;
 	}
-	swap_forks(head);
 	head->left = tmp->right;
+	swap_forks(head);
 	return (head);
 }
 
@@ -73,6 +73,10 @@ void	launch_sim(t_philo *table)
 		philo->tid_init = 0;
 		philo = philo->next;
 	}
+	pthread_mutex_destroy(&table->data->stop_lock);
+	pthread_mutex_destroy(&table->data->printf_lock);
+	if (table->data->min > -1)
+		pthread_mutex_destroy(&table->data->count_lock);
 	philo_free(table);
 }
 

@@ -15,24 +15,37 @@
 void	philo_death(t_philo *philo)
 {
 	if (disp_msg(philo, DED_MSG))
+	{
+		pthread_mutex_lock(&philo->data->stop_lock);
 		philo->data->stop = 1;
+		pthread_mutex_unlock(&philo->data->stop_lock);
+	}
 }
 
 void	philo_upcheck_count(t_philo *philo)
 {
 	philo->meal_count++;
-	if (philo->meal_count == philo->data->min)
+	if (philo->data->min > -1)
 	{
-		pthread_mutex_lock(&philo->data->count_lock);
-		philo->data->count++;
-		pthread_mutex_unlock(&philo->data->count_lock);
+		if (philo->meal_count == philo->data->min)
+		{
+			pthread_mutex_lock(&philo->data->count_lock);
+			philo->data->count++;
+			pthread_mutex_unlock(&philo->data->count_lock);
+		}
+		if (philo->data->count == philo->data->num)
+		{
+			pthread_mutex_lock(&philo->data->stop_lock);
+			philo->data->stop = 1;
+			pthread_mutex_unlock(&philo->data->stop_lock);
+		}
 	}
-	if (philo->data->count == philo->data->num)
-		philo->data->stop = 1;
 }
 
 int	metro_boulot_dodo(t_philo *philo)
 {
+	if (stopped(philo->data))
+		return (0);
 	if (!disp_msg(philo, THK_MSG))
 		return (0);
 	pthread_mutex_lock(philo->right);
@@ -51,11 +64,8 @@ int	metro_boulot_dodo(t_philo *philo)
 	if (!sleep_for(philo, philo->data->eat))
 		return (0);
 	unlock_both(philo->left, philo->right);
-	if (philo->data->min > -1)
-		philo_upcheck_count(philo);
-	if (!disp_msg(philo, EEP_MSG))
-		return (0);
-	if (!sleep_for(philo, philo->data->eep))
+	philo_upcheck_count(philo);
+	if (!disp_msg(philo, EEP_MSG) || !sleep_for(philo, philo->data->eep))
 		return (0);
 	return (1);
 }
@@ -86,7 +96,7 @@ void	*philo_routine(void *data)
 		return (solo_philo(philo));
 	if (philo->seat % 2)
 		wait_for(philo->data->eat / 2);
-	while (!philo->data->stop && metro_boulot_dodo(philo))
+	while (metro_boulot_dodo(philo))
 		continue ;
 	return (NULL);
 }

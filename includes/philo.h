@@ -37,9 +37,11 @@ typedef struct s_data
 	int				eep;
 	int				min;
 	int				stop;
+	pthread_mutex_t	stop_lock;
 	int				count;
 	pthread_mutex_t	count_lock;
 	long unsigned	start;
+	pthread_mutex_t	printf_lock;
 }		t_data;
 
 typedef struct s_philo
@@ -70,6 +72,7 @@ void			philo_death(t_philo *philo);
 int				parse_args(t_data *data, char **av, int ac);
 
 // utils/utils.c
+int				stopped(t_data *data);
 int				disp_msg(t_philo *philo, char *message);
 void			unlock_both(pthread_mutex_t *left, pthread_mutex_t *right);
 

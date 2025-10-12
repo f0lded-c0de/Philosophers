@@ -9,6 +9,8 @@ NAME = philo
 
 DEBUG = debug
 
+SANI = sani
+
 all: $(NAME)
 
 
@@ -16,8 +18,10 @@ $(NAME): $(OBJ)
 	cc $(OBJ) -o $(NAME)
 
 $(DEBUG): $(SRC)
-	echo test
 	cc $(CFLAGS) -g3 $(SRC) -o $(DEBUG)
+
+$(SANI): $(SRC)
+	cc $(CFLAGS) -g3 $(SRC) -o $(SANI) -fsanitize=thread
 
 clean:
 	rm -f */*.o
