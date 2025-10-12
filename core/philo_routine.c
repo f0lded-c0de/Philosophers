@@ -37,24 +37,24 @@ int	metro_boulot_dodo(t_philo *philo)
 	if (philo->data->stop)
 		return (pthread_mutex_unlock(philo->right), 0);
 	disp_msg(philo, FRK_MSG);
-	if (get_true_time(philo->data) > (philo->last_meal + philo->data->ded))
+	if (get_true_time() > (philo->last_meal + philo->data->ded))
 		return (philo_death(philo), pthread_mutex_unlock(philo->right), 0);
 	pthread_mutex_lock(philo->left);
 	if (philo->data->stop)
 		return (unlock_both(philo->left, philo->right), 0);
 	disp_msg(philo, FRK_MSG);
-	if (get_true_time(philo->data) > (philo->last_meal + philo->data->ded))
+	if (get_true_time() > (philo->last_meal + philo->data->ded))
 		return (philo_death(philo), unlock_both(philo->left, philo->right), 0);
 	disp_msg(philo, EAT_MSG);
-	philo->last_meal = get_true_time(philo->data);
-	wait_for(philo->data->eat, philo->data);
+	philo->last_meal = get_true_time();
+	wait_for(philo->data->eat);
 	unlock_both(philo->left, philo->right);
 	if (philo->data->min > -1)
 		philo_upcheck_count(philo);
 	if (philo->data->stop)
 		return (0);
 	disp_msg(philo, EEP_MSG);
-	wait_for(philo->data->eep, philo->data);
+	wait_for(philo->data->eep);
 	return (1);
 }
 
@@ -62,7 +62,7 @@ void	*solo_philo(t_philo *philo)
 {
 	pthread_mutex_lock(philo->right);
 	disp_msg(philo, FRK_MSG);
-	wait_for(philo->data->ded, philo->data);
+	wait_for(philo->data->ded);
 	disp_msg(philo, DED_MSG);
 	pthread_mutex_unlock(philo->right);
 	return (NULL);
@@ -75,7 +75,7 @@ void	*philo_routine(void *data)
 	philo = (t_philo *)data;
 	if (!philo->data->min)
 		return (NULL);
-	while (get_true_time(philo->data) < philo->data->start)
+	while (get_true_time() < philo->data->start)
 		usleep(50);
 	philo->last_meal = philo->data->start;
 	if (philo->data->ded == 0)

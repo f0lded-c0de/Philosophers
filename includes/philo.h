@@ -69,9 +69,10 @@ void			*philo_routine(void *data);
 int				parse_args(t_data *data, char **av, int ac);
 
 // utils/utils.c
-long unsigned	get_true_time(t_data *data);
+long unsigned	get_true_time(void);
+long unsigned	get_sim_time(t_data *data);
 void			disp_msg(t_philo *philo, char *message);
-void			wait_for(long unsigned ms, t_data *data);
+void			wait_for(long unsigned ms);
 void			unlock_both(pthread_mutex_t *left, pthread_mutex_t *right);
 
 // utils/str.c
