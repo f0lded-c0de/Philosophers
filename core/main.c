@@ -40,7 +40,8 @@ void	launch_sim(t_philo *table)
 	t_philo	*philo;
 
 	philo = table;
-	table->data->start = get_true_time() + (table->data->num * 2 * 10);
+	table->data->start = 0;
+	table->data->start = get_true_time(table->data) + (table->data->num * 2 * 10);
 	while (philo)
 	{
 		if (pthread_create(&philo->tid, NULL, philo_routine, philo))

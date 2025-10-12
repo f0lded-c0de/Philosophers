@@ -69,9 +69,9 @@ void			*philo_routine(void *data);
 int				parse_args(t_data *data, char **av, int ac);
 
 // utils/utils.c
-long unsigned	get_true_time(void);
+long unsigned	get_true_time(t_data *data);
 void			disp_msg(t_philo *philo, char *message);
-void			wait_for(long unsigned ms);
+void			wait_for(long unsigned ms, t_data *data);
 void			unlock_both(pthread_mutex_t *left, pthread_mutex_t *right);
 
 // utils/str.c
@@ -82,8 +82,8 @@ int				ft_atoi(const char *nptr);
 // Philo Messages
 # define FRK_MSG "has taken a fork"
 # define EAT_MSG "is eating"
-# define EEP_MSG "went to eep"
+# define EEP_MSG "went to sleep"
 # define THK_MSG "is thinking"
-# define DED_MSG "is ded"
+# define DED_MSG "is dead"
 
 #endif
