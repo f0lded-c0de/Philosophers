@@ -46,7 +46,7 @@ int	parse_args(t_data *data, char **av, int ac)
 	{
 		data->min = ft_atoi(av[5]);
 		data->count = 0;
-		if (!pthread_mutex_init(&data->count_lock, NULL))
+		if (pthread_mutex_init(&data->count_lock, NULL))
 			return (puterr(MUT_ERR), 0);
 	}
 	else
