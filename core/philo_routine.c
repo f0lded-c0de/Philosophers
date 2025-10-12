@@ -17,6 +17,7 @@ void	philo_death(t_philo *philo)
 	disp_msg(philo, DED_MSG);
 	philo->data->stop = 1;
 }
+
 void	philo_upcheck_count(t_philo *philo)
 {
 	philo->meal_count++;

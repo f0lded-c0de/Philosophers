@@ -16,7 +16,7 @@ static t_philo	*set_table(t_data *data)
 {
 	t_philo	*head;
 	t_philo	*tmp;
-	int	i;
+	int		i;
 
 	i = 1;
 	head = philo_new(data, NULL, i);
