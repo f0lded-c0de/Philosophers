@@ -6,7 +6,7 @@
 /*   By: bsamzun <bsamzun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:24:27 by bsamzun           #+#    #+#             */
-/*   Updated: 2025/10/12 16:13:51 by bsamzun          ###   ########.fr       */
+/*   Updated: 2025/10/14 19:26:46 by bsamzun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct s_data
 	int				eep;
 	int				min;
 	int				stop;
+	pthread_t		charon_tid;
+	int				c_tid_init;
 	pthread_mutex_t	stop_lock;
 	int				count;
 	pthread_mutex_t	count_lock;
@@ -49,20 +51,24 @@ typedef struct s_philo
 	t_data			*data;
 	int				seat;
 	int				ded;
+	pthread_mutex_t ded_lock;
 	pthread_t		tid;
 	int				tid_init;
 	long unsigned	last_meal;
+	pthread_mutex_t	last_lock;
 	int				meal_count;
 	t_philo			*next;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
-	int				right_init;
+	int				mutex_init;
 }					t_philo;
 
 /* * * * * * * * * * * * * * * * * Functions  * * * * * * * * * * * * * * * * */
 // core/philo.c
 t_philo			*philo_new(t_data *data, pthread_mutex_t *left, int seat);
 void			philo_free(t_philo *head);
+void			update_last_meal(t_philo *philo);
+int				am_i_dead(t_philo *philo);
 
 // core/philo_routine.c
 void			*philo_routine(void *data);
@@ -70,6 +76,9 @@ void			philo_death(t_philo *philo);
 
 // core/parsing.c
 int				parse_args(t_data *data, char **av, int ac);
+
+// core/charon_routine.c
+void			*charon_routine(void *arg);
 
 // utils/utils.c
 int				stopped(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: bsamzun <bsamzun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:21:27 by bsamzun           #+#    #+#             */
-/*   Updated: 2025/10/12 13:38:29 by bsamzun          ###   ########.fr       */
+/*   Updated: 2025/10/14 19:28:40 by bsamzun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_philo	*set_table(t_data *data)
 	return (head);
 }
 
-void	launch_sim(t_philo *table)
+static void	launch_sim(t_philo *table)
 {
 	t_philo	*philo;
 
@@ -66,6 +66,15 @@ void	launch_sim(t_philo *table)
 		philo->tid_init = 1;
 		philo = philo->next;
 	}
+	if (pthread_create(&table->data->charon_tid, NULL, charon_routine, table))
+		return (puterr(THR_ERR), philo_free(table));
+	table->data->c_tid_init = 1;
+}
+
+static void	end_sim(t_philo *table)
+{
+	t_philo	*philo;
+
 	philo = table;
 	while (philo)
 	{
@@ -73,6 +82,7 @@ void	launch_sim(t_philo *table)
 		philo->tid_init = 0;
 		philo = philo->next;
 	}
+	pthread_join(table->data->charon_tid, NULL);
 	pthread_mutex_destroy(&table->data->stop_lock);
 	pthread_mutex_destroy(&table->data->printf_lock);
 	if (table->data->min > -1)
@@ -95,5 +105,6 @@ int	main(int ac, char **av)
 	if (!table)
 		return (1);
 	launch_sim(table);
+	end_sim(table);
 	return (0);
 }

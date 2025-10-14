@@ -6,7 +6,7 @@
 /*   By: bsamzun <bsamzun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:35:37 by bsamzun           #+#    #+#             */
-/*   Updated: 2025/10/12 12:49:42 by bsamzun          ###   ########.fr       */
+/*   Updated: 2025/10/14 19:27:30 by bsamzun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	parse_args(t_data *data, char **av, int ac)
 	data->stop = 0;
 	if (!mutex_init(data, ac))
 		return (0);
+	data->c_tid_init = 0;
 	if (data->num == -1 || data->ded == -1 || data->eat == -1
 		|| data->eep == -1 || (ac == 6 && data->min == -1))
 		return (0);

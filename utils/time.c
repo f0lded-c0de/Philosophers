@@ -38,8 +38,11 @@ int	sleep_for(t_philo *philo, long unsigned ms)
 	while (start + ms > get_true_time())
 	{
 		usleep(50);
+		pthread_mutex_lock(&philo->last_lock);
 		if (get_true_time() > (philo->last_meal + philo->data->ded))
-			return (philo_death(philo), 0);
+			return (pthread_mutex_unlock(&philo->last_lock),
+				philo_death(philo), 0);
+		pthread_mutex_unlock(&philo->last_lock);
 	}
 	return (1);
 }

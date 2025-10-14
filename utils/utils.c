@@ -17,10 +17,7 @@ int	stopped(t_data *data)
 	int	ret;
 
 	pthread_mutex_lock(&data->stop_lock);
-	if (data->stop)
-		ret = 1;
-	else
-		ret = 0;
+	ret = data->stop;
 	pthread_mutex_unlock(&data->stop_lock);
 	return (ret);
 }
