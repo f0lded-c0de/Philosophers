@@ -51,7 +51,7 @@ typedef struct s_philo
 	t_data			*data;
 	int				seat;
 	int				ded;
-	pthread_mutex_t ded_lock;
+	pthread_mutex_t	ded_lock;
 	pthread_t		tid;
 	int				tid_init;
 	long unsigned	last_meal;
