@@ -26,8 +26,8 @@ int	am_i_dead(t_philo *philo)
 		return (pthread_mutex_unlock(&philo->ded_lock), 1);
 	pthread_mutex_unlock(&philo->ded_lock);
 	pthread_mutex_lock(&philo->last_lock);
-	if (philo->last_meal > 0 &&
-		get_true_time() > (philo->last_meal + philo->data->ded))
+	if (philo->last_meal > 0
+		&& get_true_time() > (philo->last_meal + philo->data->ded))
 		return (pthread_mutex_unlock(&philo->last_lock), 1);
 	pthread_mutex_unlock(&philo->last_lock);
 	return (0);

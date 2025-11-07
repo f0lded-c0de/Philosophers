@@ -59,7 +59,6 @@ static void	launch_sim(t_philo *table)
 	philo = table;
 	table->data->start = 0;
 	table->data->start = get_true_time() + (table->data->num * 5);
-	/* pthread_mutex_lock(&table->data->launch_lock); */
 	while (philo)
 	{
 		if (pthread_create(&philo->tid, NULL, philo_routine, philo))
@@ -67,9 +66,9 @@ static void	launch_sim(t_philo *table)
 		philo->tid_init = 1;
 		philo = philo->next;
 	}
-	/* pthread_mutex_unlock(&table->data->launch_lock); */
 	if (table->data->num > 1)
-		if (pthread_create(&table->data->charon_tid, NULL, charon_routine, table))
+		if (pthread_create(&table->data->charon_tid, NULL,
+				charon_routine, table))
 			return (puterr(THR_ERR), philo_free(table));
 	table->data->c_tid_init = 1;
 }
@@ -85,7 +84,8 @@ static void	end_sim(t_philo *table)
 		philo->tid_init = 0;
 		philo = philo->next;
 	}
-	pthread_join(table->data->charon_tid, NULL);
+	if (table->data->num > 1)
+		pthread_join(table->data->charon_tid, NULL);
 	pthread_mutex_destroy(&table->data->stop_lock);
 	pthread_mutex_destroy(&table->data->printf_lock);
 	if (table->data->min > -1)
@@ -104,6 +104,8 @@ int	main(int ac, char **av)
 		return (puterr(MAX_ARG), 1);
 	if (!parse_args(&data, av, ac))
 		return (1);
+	if (!data.num || !data.min)
+		return (0);
 	table = set_table(&data);
 	if (!table)
 		return (1);

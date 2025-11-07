@@ -58,14 +58,6 @@ int	mutex_init(t_data *data, int ac)
 			pthread_mutex_destroy(&data->count_lock);
 		return (puterr(MUT_ERR), 0);
 	}
-	/* if (pthread_mutex_init(&data->launch_lock, NULL)) */
-	/* { */
-	/* 	pthread_mutex_destroy(&data->printf_lock); */
-	/* 	pthread_mutex_destroy(&data->stop_lock); */
-	/* 	if (ac == 6) */
-	/* 		pthread_mutex_destroy(&data->count_lock); */
-	/* 	return (puterr(MUT_ERR), 0); */
-	/* } */
 	return (1);
 }
 

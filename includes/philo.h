@@ -36,7 +36,6 @@ typedef struct s_data
 	int				eat;
 	int				eep;
 	int				min;
-	/* pthread_mutex_t launch_lock; */
 	int				stop;
 	pthread_t		charon_tid;
 	int				c_tid_init;

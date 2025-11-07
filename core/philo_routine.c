@@ -95,8 +95,6 @@ void	*philo_routine(void *data)
 	philo = (t_philo *)data;
 	if (!philo->data->min)
 		return (NULL);
-	/* pthread_mutex_lock(&philo->data->launch_lock); */
-	/* pthread_mutex_unlock(&philo->data->launch_lock); */
 	while (get_true_time() < philo->data->start)
 		usleep(50);
 	pthread_mutex_lock(&philo->last_lock);
