@@ -8,21 +8,10 @@ CFLAGS += -Wall -Werror -Wextra -I./includes
 
 NAME = philo
 
-DEBUG = debug
-
-SANI = sani
-
 all: $(NAME)
-
 
 $(NAME): $(OBJ)
 	cc $(OBJ) -o $(NAME)
-
-$(DEBUG): $(SRC)
-	cc $(CFLAGS) -g3 $(SRC) -o $(DEBUG)
-
-$(SANI): $(SRC)
-	cc $(CFLAGS) -g3 $(SRC) -o $(SANI) -fsanitize=thread
 
 clean:
 	rm -f */*.o
@@ -30,8 +19,8 @@ clean:
 	rm -f $(LIBFT)/libft.a
 
 fclean: clean
-	rm -f $(NAME) $(DEBUG)
+	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re debug
+.PHONY: all clean fclean re
