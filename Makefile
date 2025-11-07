@@ -16,7 +16,6 @@ $(NAME): $(OBJ)
 clean:
 	rm -f */*.o
 	rm -f */*/*.o
-	rm -f $(LIBFT)/libft.a
 
 fclean: clean
 	rm -f $(NAME)
