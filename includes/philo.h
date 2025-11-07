@@ -36,6 +36,7 @@ typedef struct s_data
 	int				eat;
 	int				eep;
 	int				min;
+	/* pthread_mutex_t launch_lock; */
 	int				stop;
 	pthread_t		charon_tid;
 	int				c_tid_init;
@@ -100,8 +101,8 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 // Philo Messages
 # define FRK_MSG "has taken a fork"
 # define EAT_MSG "is eating"
-# define EEP_MSG "went to eep"
+# define EEP_MSG "is sleeping"
 # define THK_MSG "is thinking"
-# define DED_MSG "is ded"
+# define DED_MSG "is dead"
 
 #endif

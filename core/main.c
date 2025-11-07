@@ -59,6 +59,7 @@ static void	launch_sim(t_philo *table)
 	philo = table;
 	table->data->start = 0;
 	table->data->start = get_true_time() + (table->data->num * 5);
+	/* pthread_mutex_lock(&table->data->launch_lock); */
 	while (philo)
 	{
 		if (pthread_create(&philo->tid, NULL, philo_routine, philo))
@@ -66,8 +67,10 @@ static void	launch_sim(t_philo *table)
 		philo->tid_init = 1;
 		philo = philo->next;
 	}
-	if (pthread_create(&table->data->charon_tid, NULL, charon_routine, table))
-		return (puterr(THR_ERR), philo_free(table));
+	/* pthread_mutex_unlock(&table->data->launch_lock); */
+	if (table->data->num > 1)
+		if (pthread_create(&table->data->charon_tid, NULL, charon_routine, table))
+			return (puterr(THR_ERR), philo_free(table));
 	table->data->c_tid_init = 1;
 }
 
